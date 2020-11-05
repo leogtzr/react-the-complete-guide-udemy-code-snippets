@@ -21,7 +21,3 @@
 npm-debug.log*
 yarn-debug.log*
 yarn-error.log*
-
-react-complete-guide/node_modules
-react-counter-button/node_modules
-assignment1/node_modules

@@ -14,9 +14,10 @@ import '../Person/Person.css';
 // Function component flavor.
 const Person = (props) => {
     return (
-        <div>
+        <div className="Person">
             <p onClick={props.click}>Hello, I am {props.name}, I am {props.age}</p>
             {props.children && (<p>My hobby is: <b>{props.children}</b></p>)}
+            <input type="text" onChange={props.changed} value={props.name} />
         </div>
     )
 };

@@ -1,5 +1,5 @@
 import './App.css';
-import React, { Component, useState } from 'react';
+import React, { useState } from 'react';
 import Person from './Person/Person';
 
 // Class based component:
@@ -62,9 +62,33 @@ const App = props => {
       { name: 'Edgar', age: 32 }
   ]);
 
+  const [showPersons, setShowPersons] = useState(true);
+
+  const nameChangeHandler = (event, index) => {
+
+    const personsToChange = [...persons];
+
+    const person = personsToChange[index];
+    person.name = event.target.value;
+
+    setPersons(personsToChange);
+
+
+    // setPersons(
+    //   [
+    //     // { name: capitalizeName(persons[0].name), age: 29, hobby: 'reading' },
+    //     { name: event.target.value, age: 29, hobby: 'reading' },
+    //     { name: event.target.value, age: 49 },
+    //     { name: event.target.value, age: 49 },
+    //     { name: event.target.value, age: 25 },
+    //     { name: event.target.value, age: 32 }
+    //   ]
+    // );
+  };
+
   // const switchNameHandler = () => {
   const switchNameHandler = (newName) => {
-    console.log('Was clicked ... ');
+    console.log('I am changing something.');
     setPersons(
       [
         // { name: capitalizeName(persons[0].name), age: 29, hobby: 'reading' },
@@ -77,14 +101,46 @@ const App = props => {
     );
   };
 
+  const style = {
+    backgroundColor: 'white',
+    font: 'inherit',
+    border: '1px solid blue',
+    padding: '8px',
+    cursor: 'pointer'
+  };
+
+  const togglePersonsHandler = () => {
+    setShowPersons(!showPersons);
+  };
+
+  const deletePersonHandler = (index) => {
+    console.log('Trying to delete a person: ', index);
+    // const personsFromState = persons.slice();
+    const personsFromState = [...persons];
+    personsFromState.splice(index, 1);
+    setPersons(personsFromState);
+  };
+
   return (
+
     <div className="App">
       {/* <button onClick={switchNameHandler.bind(this, 'Maxi')}>Switch Name</button> */}
-      <button onClick={() => switchNameHandler('Leito')}>Switch Name</button>
-      {
-        persons.map(p => (
-          <Person name={p.name} age={p.age} click={switchNameHandler}/>
-         ))
+      <button onClick={togglePersonsHandler} style={style}>Switch Name</button>
+      {showPersons && (
+        <div>
+        {
+          persons.map((p, index) => (
+            <Person 
+              name={p.name} 
+              age={p.age} 
+              changed={(event) => nameChangeHandler(event, index)}
+              click={() => deletePersonHandler(index)}
+              key={index}
+              />
+          ))
+        }
+        </div>
+      )
       }
     </div>
   );
